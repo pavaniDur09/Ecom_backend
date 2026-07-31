@@ -93,10 +93,10 @@ through every endpoint. No `Authorization` header is needed for any of
 these right now.
 
 ### Health check
-```bash
+
 curl http://localhost:8081/api/products
 ![alt text](image-14.png)
-```
+
 If this returns a JSON page of products, the app, database, and migrations
 all worked.
 
