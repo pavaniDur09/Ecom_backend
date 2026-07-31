@@ -1,0 +1,62 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: ecommerce-backend
+
+  # ---------- PostgreSQL DataSource ----------
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:ecommerce_db}
+    username: ${DB_USER:postgres}
+    password: ${DB_PASSWORD:postgres}
+    driver-class-name: org.postgresql.Driver
+    # ---------- HikariCP connection pooling ----------
+    hikari:
+      pool-name: EcommerceHikariPool
+      maximum-pool-size: 10
+      minimum-idle: 2
+      idle-timeout: 30000
+      connection-timeout: 20000
+      max-lifetime: 1800000
+
+  # ---------- JPA / Hibernate ----------
+  jpa:
+    hibernate:
+      # Flyway owns the schema; Hibernate should only validate it matches.
+      ddl-auto: validate
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        # Avoids the classic N+1 problem for default batch fetching
+        default_batch_fetch_size: 20
+        jdbc:
+          batch_size: 20
+        order_inserts: true
+        order_updates: true
+        # Query logging for debugging / performance monitoring
+        generate_statistics: true
+    open-in-view: false
+
+  # ---------- Flyway migrations ----------
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    baseline-on-migrate: true
+
+  # ---------- Caching ----------
+  cache:
+    type: simple
+    cache-names: products,categories
+
+logging:
+  level:
+    org.hibernate.SQL: debug
+    org.hibernate.orm.jdbc.bind: trace
+    com.zaxxer.hikari: info
+
+app:
+  jwt:
+    secret: ${JWT_SECRET:change-this-secret-in-production-please-0123456789}
+    expiration-ms: 86400000 # 24h

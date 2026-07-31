@@ -1,0 +1,24 @@
+{
+  "name": "ecommerce-backend",
+  "image": "mcr.microsoft.com/devcontainers/java:17",
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {}
+  },
+  "forwardPorts": [8081, 5432],
+  "portsAttributes": {
+    "8080": { "label": "Spring Boot API", "onAutoForward": "openBrowser" },
+    "5432": { "label": "PostgreSQL" }
+  },
+  // Starts PostgreSQL in the background and pre-downloads Maven dependencies
+  // so the first `./mvnw spring-boot:run` is fast.
+  "postCreateCommand": "chmod +x mvnw && docker compose up -d && ./mvnw -q dependency:go-offline",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "vscjava.vscode-java-pack",
+        "vmware.vscode-spring-boot",
+        "vscjava.vscode-spring-initializr"
+      ]
+    }
+  }
+}
