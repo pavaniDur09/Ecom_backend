@@ -74,7 +74,7 @@ schema and data for you on startup.
 Demo login (seeded in V2): username `jdoe` / password `password123` (same
 password for `admin`, `asmith`, `mgarcia`).
 
-## ⚠️ Authentication status (read this first)
+## Authentication status (read this first)
 
 **Every endpoint is currently open — no login/token is required to call
 any of them.** This is intentional for this stage of the assignment, so
@@ -101,18 +101,16 @@ If this returns a JSON page of products, the app, database, and migrations
 all worked.
 
 ### Auth
-```bash
 # Register a new user
 curl -X POST http://localhost:8081/api/auth/register -H "Content-Type: application/json" -d "{\"username\":\"testuser\",\"email\":\"test@example.com\",\"password\":\"password123\",\"firstName\":\"Test\",\"lastName\":\"User\"}"
 ![alt text](image.png)
 
 # Log in with a seeded user
 curl -X POST http://localhost:8081/api/auth/login -H "Content-Type: application/json" -d "{\"username\":\"testuser\",\"password\":\"password123\"}"
-```
 ![alt text](image-1.png)
 
 ### Products
-```bash
+
 # List products (paginated)
 curl "http://localhost:8081/api/products?page=0&size=10"
 ![alt text](image-2.png)
@@ -134,10 +132,8 @@ curl -X PUT http://localhost:8081/api/products/1 -H "Content-Type: application/j
 ![alt text](image-6.png)
 
 curl -X DELETE http://localhost:8081/api/products/1
-```
 
 ### Orders
-```bash
 # Create an order (see full JSON example further below)
 curl -X POST http://localhost:8081/api/orders -H "Content-Type: application/json" -d "{\"userId\":2,\"items\":[{\"productId\":1,\"quantity\":2}],\"shippingAddress\":\"123 Main St\"}"
 ![alt text](image-7.png)
@@ -155,24 +151,21 @@ curl -X PUT http://localhost:8081/api/orders/1/cancel
 
 # Daily sales report
 curl "http://localhost:8081/api/orders/report/daily?since=2024-01-01T00:00:00"
-```
 
 ### Payments
-```bash
 curl -X POST "http://localhost:8081/api/payments/1?method=CREDIT_CARD"
 ![alt text](image-10.png)
 
 curl http://localhost:8081/api/payments/order/1
-```
 
 ### Users
-```bash
+
 curl http://localhost:8081/api/users/2/profile
 ![alt text](image-11.png)
 
 curl -X PUT http://localhost:8081/api/users/2/profile -H "Content-Type: application/json" -d "{\"username\":\"jdoe\",\"email\":\"jdoe@example.com\",\"firstName\":\"Jonathan\",\"lastName\":\"Doe\"}"
 ![alt text](image-12.png)
-```
+
 
 Easier alternative to curl on Windows: import these into **Postman** or
 use the **Thunder Client** VS Code extension — same requests.
@@ -213,10 +206,9 @@ GET /api/products?categoryId=2&minPrice=10&maxPrice=100&page=0&size=20&sort=pric
 ```
 
 ### Daily sales report (native query)
-```
 GET /api/orders/report/daily?since=2024-01-01T00:00:00
 ![alt text](image-13.png)
-```
+
 
 ## Query Optimization Notes
 
